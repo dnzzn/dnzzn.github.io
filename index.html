@@ -1,1 +1,35 @@
+<!DOCTYPE html>
+<html>
+<script>
+
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+                alert(allText);
+            }
+        }
+    }
+    rawFile.send(null);
+}
+
+    var similarities = JSON.parse(readTextFile("similarities.json"));
+    var titles = JSON.parse(readTextFile("title.json"));
+
+
+</script>
+<body>
 Cengiz Uzun
+<br>
+<iframe src="all_articles/tennis_001.txt" height="80%" width="40%"></iframe>
+
+</body>
+</html>
