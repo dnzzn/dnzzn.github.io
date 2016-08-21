@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
 
 <body>
 Cengiz Uzun
 <br>
 <div>
-<iframe src="" id="ma" height="80%" width="40%" style="float: left"></iframe>
+    <iframe src="" id="ma" height="80%" width="40%" style="float: left"></iframe>
 </div>
-    <div style="float: left" id="ul">
-    <li><a>Titlename1</a></li>
-    <li><a>Titlename2</a></li>
-    <li><a>Titlename1</a></li>
-    <li><a>Titlename1</a></li>
-    <li><a>Titlename1</a></li>
+
+<div style="float: left" >
+    <ul id="related-titles">
+    </ul>
 </div>
+
 </body>
 <script>
 
@@ -28,20 +30,24 @@ Cengiz Uzun
         arr.push(x);
     }
 
-    var current_title =arr[Math.floor(Math.random() * arr.length)];
-    document.getElementById("ma").src =  "all_articles/" + current_title;
+    var current_title = arr[Math.floor(Math.random() * arr.length)];
+    document.getElementById("ma").src = "all_articles/" + current_title;
     related_titles = (similarities[current_title]['related']);
-
 
 
     var request = new XMLHttpRequest();
     request.open("GET", "title.json", false);
     request.send(null);
     var titles = JSON.parse(request.responseText);
+    tits = []
+    for (var r in related_titles) tits.push(titles[related_titles[r]]);
 
-    for (var r in related_titles) alert(titles[related_titles[r]]);
-
-    alert(related_titles)
+    var ul = $('<ul>').appendTo('ul');
+    $(tits).each(function (index, item) {
+        ul.append(
+                $(document.createElement('li')).text(item)
+        );
+    });
 
 
 </script>
