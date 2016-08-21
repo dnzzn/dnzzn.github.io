@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html>
-<script>
 
-
-function readTextFile(file)
-{
-    var rawFile = new XMLHttpRequest();
-    rawFile.open("GET", file, false);
-    rawFile.onreadystatechange = function ()
-    {
-        if(rawFile.readyState === 4)
-        {
-            if(rawFile.status === 200 || rawFile.status == 0)
-            {
-                var allText = rawFile.responseText;
-                alert(allText);
-            }
-        }
-    }
-    rawFile.send(null);
-}
-
-    var similarities = JSON.parse(readTextFile("similarities.json"));
-    var titles = JSON.parse(readTextFile("title.json"));
-
-
-</script>
 <body>
 Cengiz Uzun
 <br>
-<iframe src="all_articles/tennis_001.txt" height="80%" width="40%"></iframe>
-
+<div>
+<iframe src="" id="ma" height="80%" width="40%" style="float: left"></iframe>
+</div>
+    <div style="float: left" id="ul">
+    <li><a>Titlename1</a></li>
+    <li><a>Titlename2</a></li>
+    <li><a>Titlename1</a></li>
+    <li><a>Titlename1</a></li>
+    <li><a>Titlename1</a></li>
+</div>
 </body>
+<script>
+
+
+    var request = new XMLHttpRequest();
+    request.open("GET", "similarities.json", false);
+    request.send(null);
+    var similarities = JSON.parse(request.responseText);
+
+    var arr = [];
+    for (var x in similarities) {
+        arr.push(x);
+    }
+
+    var current_title =arr[Math.floor(Math.random() * arr.length)];
+    document.getElementById("ma").src =  "all_articles/" + current_title;
+    related_titles = (similarities[current_title]['related']);
+
+
+
+    var request = new XMLHttpRequest();
+    request.open("GET", "title.json", false);
+    request.send(null);
+    var titles = JSON.parse(request.responseText);
+
+    for (var r in related_titles) alert(titles[related_titles[r]]);
+
+    alert(related_titles)
+
+
+</script>
 </html>
